@@ -182,3 +182,18 @@ fn withm [f &k=key &v=value]{
     }
   }
 }
+
+fn contains [set]{
+  put [el]{
+    if (eq $set []) {
+      put $false
+    } else {
+      h @t = $@set
+      if (eq $h $el) {
+        put $true
+      } else {
+        (contains $t) $el
+      }
+    }
+  }
+}

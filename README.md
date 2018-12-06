@@ -1,6 +1,8 @@
 # Elvish Modules
 
-Some utilities for life in [elvish](https://elv.sh).
+Some utilities for life in [elvish](https://elv.sh). I learned a lot
+from looking [here](https://github.com/zzamboni/elvish-modules) –
+thanks!
 
 ## list.elv
 
@@ -32,6 +34,18 @@ put *.elv | each (list:with (file:lines))
 [file.elv 100]
 [list.elv 184]
 [util.elv 17]
+```
+
+### `contains`
+
+Check whether a list contains an element.
+
+``` elv
+(contains [1 3 4 2]) 4
+$true
+
+(contains [1 3 4 2]) abc
+$false
 ```
 
 ## csv.elv
