@@ -98,3 +98,41 @@ Executes the external `stat` command and returns the result in a map.
 file:stat file.elv
 [&last-access-sec=1.544128641e+09 &size=1718 &user=eike &last-mod='2018-12-06 21:37:13.763287004 +0100' &name=file.elv &type='regular file' &group-id=100 &last-mod-sec=1.544128633e+09 &group=users &last-access='2018-12-06 21:37:21.097246328 +0100' &user-id=1000]
 ```
+
+## nix.elv
+
+Utilities for working with [nix](https://nixos.org/nix)/[nixos](https://nixos.org/nixos).
+
+### Searching packages
+
+The `sqlite3` command is required.
+
+First build a database, either using `nix-env` or a `packages.json` file on [nixos server](https://nixos.org).
+
+```
+update-db-from-nix-env
+Creating statements: 20867/20867 ...
+Updating database ...
+Done.
+```
+
+Then search for packages:
+
+```
+search jdk
+nixos.oraclejdk8psu oraclejdk-8u191 (unfree)
+nixos.jdk11_headless openjdk-11.0.1-b13-headless (gpl2) The open-source Java Development Kit
+nixos.oraclejdk8 oraclejdk-8u191 (unfree)
+nixos.adoptopenjdk-jre-openj9-bin-11 adoptopenjdk-jre-openj9-bin-11.0.1 (gpl2Classpath) AdoptOpenJDK, prebuilt OpenJDK binary
+nixos.bazel_jdk11 bazel-0.18.0 (asl20) Build tool that builds code quickly and reliably
+nixos.jetbrains.jdk jetbrainsjdk-152b1248.6 (gpl2) An OpenJDK fork to better support Jetbrains's products.
+nixos.adoptopenjdk-bin adoptopenjdk-hotspot-bin-11 (gpl2Classpath) AdoptOpenJDK, prebuilt OpenJDK binary
+nixos.openjdk openjdk-8u192b26 (gpl2) The open-source Java Development Kit
+nixos.openjdk11 openjdk-11.0.1-b13 (gpl2) The open-source Java Development Kit
+nixos.bootjdk openjdk-bootstrap ()
+nixos.oraclejdk oraclejdk-8u191 (unfree)
+nixos.adoptopenjdk-jre-bin adoptopenjdk-jre-hotspot-bin-11 (gpl2Classpath) AdoptOpenJDK, prebuilt OpenJDK binary
+nixos.jdk openjdk-8u192b26 (gpl2) The open-source Java Development Kit
+nixos.adoptopenjdk-openj9-bin-11 adoptopenjdk-openj9-bin-11.0.1 (gpl2Classpath) AdoptOpenJDK, prebuilt OpenJDK binary
+nixos.jdk11 openjdk-11.0.1-b13 (gpl2) The open-source Java Development Kit
+```

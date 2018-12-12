@@ -1,4 +1,5 @@
 # try to create a reader for csv
+# only for single-line csv
 
 fn -csv-line-to-list [line &sep=, &strEncl='"']{
   result = []
@@ -19,7 +20,11 @@ fn -csv-line-to-list [line &sep=, &strEncl='"']{
       ci = (+ $ci 1)
       quoted = $false
     } elif (and $quoted (eq $c $sep) (eq $cell[-1] $strEncl)) {
-      result = [$@result $cell[:-1]]
+      if (eq $cell '"') {
+        result = [$@result ""]
+      } else {
+        result = [$@result $cell[:-1]]
+      }
       ci = 0
       cell = ''
       quoted = $false
@@ -34,7 +39,11 @@ fn -csv-line-to-list [line &sep=, &strEncl='"']{
     }
   } $line
   if (and $quoted (eq $cell[-1] $strEncl)) {
-    result = [$@result $cell[:-1]]
+    if (eq $cell '"') {
+      result = [$@result '']
+    } else {
+      result = [$@result $cell[:-1]]
+    }
   } else {
     result = [$@result $cell]
   }

@@ -31,6 +31,22 @@ fn get [n &mapchar=.]{
 3 = (get 2)
 4 = (get 3)
 
+fn getopt [@keys &default='']{
+  put [map]{
+    current = $map
+    ks = $keys
+    while (and (not-eq [] $ks) (has-key $current $ks[0])) {
+      current = $current[$ks[0]]
+      @ks = (drop 1 $ks)
+    }
+    if (eq [] $ks) {
+      put $current
+    } else {
+      put $default
+    }
+  }
+}
+
 fn findcmp [f a @rest]{
   for n $rest {
     if ($f $n $a) {
