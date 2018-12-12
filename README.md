@@ -136,3 +136,9 @@ nixos.jdk openjdk-8u192b26 (gpl2) The open-source Java Development Kit
 nixos.adoptopenjdk-openj9-bin-11 adoptopenjdk-openj9-bin-11.0.1 (gpl2Classpath) AdoptOpenJDK, prebuilt OpenJDK binary
 nixos.jdk11 openjdk-11.0.1-b13 (gpl2) The open-source Java Development Kit
 ```
+
+## completer.elv
+
+Argument completion for some commands:
+
+- [pass](https://www.passwordstore.org/)
