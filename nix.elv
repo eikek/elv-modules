@@ -25,8 +25,8 @@ fn -loaddb [&keep-sql-file=$false]{
   each [k]{
     pkg = $all[$k]
     pkgname = ((list:getopt name) $pkg)
-    pkgdescr = (replaces "'" "''" ((list:getopt meta description) $pkg))
-    license = (replaces "'" "''" ((list:getopt meta license shortName) $pkg))
+    pkgdescr = (replaces "\n" " " (replaces "'" "''" ((list:getopt meta description) $pkg)))
+    license = (replaces "\n" " " (replaces "'" "''" ((list:getopt meta license shortName) $pkg)))
     system = ((list:getopt system) $pkg)
     echo "insert into nixpkgs (key,name,license,descr,system) values ('"$k"','"$pkgname"','"$license"','"$pkgdescr"','"$system"');" >> $sqlfile
     counter = (+ $counter 1)
