@@ -1,5 +1,7 @@
 # extract text from pdf files using tesseract
 
+use str
+
 -tesseract-bin = (external "tesseract")
 -sqlite3-bin = (external "sqlite3")
 
@@ -45,11 +47,15 @@ fn -relative-path [dir file]{
     rest = (str:trim-prefix $file $dir)
     put "."$rest
   } else {
-    put $file
+    if (str:has-prefix "./" $file) {
+      put $file
+    } else {
+      put "./"$file
+    }
   }
 }
 
-fn rebuild-db [&wd=$pwd]{
+fn rebuild-db [&wd=.]{
   dbfile = $wd/".pdftxt.db"
 
   $-sqlite3-bin $dbfile 'create table if not exists pdftxt (file text, extract text)'
@@ -61,7 +67,7 @@ fn rebuild-db [&wd=$pwd]{
   }
 }
 
-fn update-db [&wd=$pwd]{
+fn update-db [&wd=.]{
   dbfile = $wd/".pdftxt.db"
 
   $-sqlite3-bin $dbfile 'create table if not exists pdftxt (file text, extract text)'
@@ -76,11 +82,21 @@ fn update-db [&wd=$pwd]{
   }
 }
 
-fn search [q &wd=$pwd]{
+fn search [q &wd=.]{
   dbfile = $wd/".pdftxt.db"
-  $-sqlite3-bin $dbfile "SELECT file FROM pdftxt WHERE extract like '%"$q"%' OR file like '%"$q"%'" | each [f]{
-    if ?(test $f) {
-      put $f
+  if ?(test $dbfile) {
+    $-sqlite3-bin $dbfile "SELECT file FROM pdftxt WHERE extract like '%"$q"%' OR file like '%"$q"%'" | each [f]{
+      if ?(test $f) {
+        put $f
+      }
     }
+  }
+}
+
+fn show-text [f &wd=.]{
+  dbfile = $wd/".pdftxt.db"
+  if ?(test $dbfile) {
+    file = (-relative-path $wd $f)
+    $-sqlite3-bin $dbfile "SELECT extract FROM pdftxt WHERE file = '"$file"'"
   }
 }
