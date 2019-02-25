@@ -4,6 +4,7 @@ use str
 
 -tesseract-bin = (external "tesseract")
 -sqlite3-bin = (external "sqlite3")
+-max-extract-pages = 10
 
 fn extract-text [f]{
   print (styled "\rCreating images …" gray) >&2
@@ -12,7 +13,7 @@ fn extract-text [f]{
 
   len = (put $dir/out*.tiff | count)
   index = 1
-  put $dir/out*.tiff | each [tf]{
+  put $dir/out*.tiff | take $-max-extract-pages | each [tf]{
     try {
       print (styled "\rExtracting page "$index"/"$len gray) >&2
       $-tesseract-bin $tf stdout -l deu 2>/dev/null >>$dir/text
@@ -90,6 +91,12 @@ fn search [q &wd=.]{
         put $f
       }
     }
+  }
+}
+
+fn view [q &wd=.]{
+  search $q &wd=$wd | each [f]{
+    zathura $f
   }
 }
 
