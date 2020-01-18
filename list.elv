@@ -1,9 +1,9 @@
 fn is-list [v]{
-  put (==s (kind-of $v) "list")
+  ==s (kind-of $v) "list"
 }
 
 fn is-map [v]{
-  put (==s (kind-of $v) "map")
+  ==s (kind-of $v) "map"
 }
 
 
